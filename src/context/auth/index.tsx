@@ -22,8 +22,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const token = await AsyncStorage.getItem("@token");
       const Data: ApiDataType = await GetUser(token);
-      setUserData(Data.userData);
-      setToken(Data.token);
+      setUserData(Data?.userData);
+      setToken(Data?.token);
     } catch (error) {
       setUserData(null);
       setToken(null);

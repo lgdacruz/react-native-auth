@@ -1,37 +1,38 @@
 import { useState } from "react";
-import { ActivityIndicator, Button } from "react-native";
+import { ActivityIndicator } from "react-native";
 
 import { AuthUse } from "../../../context/auth";
 import { ThemeUse } from "../../../context/theme";
 import { LoginType } from "../../../types";
 import {
+  ButtonD,
   Container,
   Form,
   FormSection,
   InputForm,
   Logo,
+  TextButton,
   TextS,
 } from "./indexStyled";
 
 export const Login = ({ navigation }) => {
-  const [login, setLogin] = useState<LoginType>({} as LoginType);
+  const [form, setForm] = useState<LoginType>({} as LoginType);
 
   const { LogIn, loading } = AuthUse();
   const { lightGreen } = ThemeUse();
 
   return (
     <Container>
-      {/* <Logo source={require("../../../assets/devtocruz.png")} /> */}
       <Logo source={require("../../../assets/devtocruz.png")} />
 
       <Form>
         <FormSection>
           <TextS>Email</TextS>
           <InputForm
-            value={login.email}
+            value={form.email}
             autoCapitalize="none"
             onChangeText={(value: string) => {
-              setLogin((prev) => {
+              setForm((prev) => {
                 return { ...prev, email: value };
               });
             }}
@@ -42,11 +43,11 @@ export const Login = ({ navigation }) => {
           <TextS>Senha</TextS>
           <InputForm
             onChangeText={(value: string) => {
-              setLogin((prev) => {
+              setForm((prev) => {
                 return { ...prev, password: value };
               });
             }}
-            value={login.password}
+            value={form.password}
             secureTextEntry
           />
         </FormSection>
@@ -54,17 +55,18 @@ export const Login = ({ navigation }) => {
       {loading ? (
         <ActivityIndicator size="large" color={lightGreen} />
       ) : (
-        <Button
-          onPress={() => LogIn(login.email, login.password)}
-          title="Entrar"
-          color={lightGreen}
-        />
+        <ButtonD onPress={() => LogIn(form?.email, form?.password)} margin={10}>
+          <TextButton color="black">Entrar</TextButton>
+        </ButtonD>
       )}
-      <Button
+      <ButtonD
         onPress={() => navigation.navigate("Create")}
-        title="Criar conta"
-        color="white"
-      />
+        color="transparent"
+        margin={40}
+        windth={200}
+      >
+        <TextButton>Criar conta</TextButton>
+      </ButtonD>
     </Container>
   );
 };
